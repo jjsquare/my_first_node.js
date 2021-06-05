@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>
+            data presenting web page
+        </title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1> web page for representing data</h1>
+        <p>
+            <a href="index.html">enter</a> |
+            <a href="data.html">list</a>
+            </p>
+        <br>
+        <br>
+        <script>
+            getdata();
+            async function getdata(){
+                const response = await fetch('/api');
+                const data = await response.json();
+                for(item of data){
+                    const root = document.createElement('div');
+                    const name = document.createElement('div');
+                    const geo = document.createElement('div');
+                    const date = document.createElement('div');
+                    const linebreak = document.createElement('br');
+
+                    name.textContent = `Name : ${item.name_of_client}`;
+                    geo.textContent = `lat: ${item.lat}°, lng: ${item.lng}°`;
+                    const datestring = new Date(item.timestamp).toLocaleString();
+                    date.textContent = datestring;
+
+                    root.append(name, geo, date,linebreak);
+                    document.body.append(root);
+                }
+
+                console.log(data);
+            }
+
+        </script>
+    </body>
+</html>
